@@ -233,6 +233,24 @@ if uploaded_file is not None:
     sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
     st.pyplot(plt)
 
+#ADDING BACKGROUNND ON THE STREAMLIT OF CROPIFY
+def add_bg_from_url():
+    st.markdown(
+         f"""
+         <style>
+         .stApp {{
+             background-image: url("https://images.unsplash.com/photo-1582281298054-e84dd46d1301");
+             background-attachment: fixed;
+             background-size: cover
+         }}
+         </style>
+         """,
+         unsafe_allow_html=True
+     )
+
+add_bg_from_url()
+ 
+
 
 
 
