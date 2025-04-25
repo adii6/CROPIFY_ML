@@ -191,6 +191,54 @@ if st.button("🌱 Predict Optimal Crop"):
     st.success(f"✅ Recommended Crop using {model_choice}: **{prediction}**")
 
 
+#CORRELATION MATRIX CODE (For taking out correlation constant)
+import pandas as pd
+
+# Assuming 'df' is your DataFrame and 'label' is the target variable
+correlation_matrix = df.corr()
+correlation_with_target = correlation_matrix['label'].sort_values(ascending=False)
+
+print(correlation_with_target)
+
+
+#VISUALISING CORRELATIONS (ON A GRAPHH)
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Heatmap of the correlation matrix
+plt.figure(figsize=(10,8))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
+plt.title('Feature Correlation Matrix')
+plt.show()
+
+#DEPLOYING INTO STREAMLIT 
+import streamlit as st
+
+st.title("Cropify: Crop Recommendation System")
+
+# Upload dataset
+uploaded_file = st.file_uploader("Upload your dataset", type=["csv"])
+if uploaded_file is not None:
+    df = pd.read_csv(uploaded_file)
+    st.write("Dataset Preview:", df.head())
+
+    # Compute and display correlation matrix
+    correlation_matrix = df.corr()
+    st.subheader("Correlation Matrix")
+    st.write(correlation_matrix)
+
+    # Visualize correlation matrix
+    st.subheader("Correlation Heatmap")
+    plt.figure(figsize=(10,8))
+    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
+    st.pyplot(plt)
+
+
+
+
+
+
+
 
 
 
