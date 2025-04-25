@@ -1,0 +1,36 @@
+import streamlit as st
+ 
+# Set page configuration
+st.set_page_config(page_title="Cropify", page_icon="🌾", layout="centered")
+
+# Title and description
+st.title("🌾 Cropify – Smart Crop Recommender")
+st.markdown("Enter the soil and climate parameters below to get the best crop suggestion powered by AI.")
+
+# Sidebar input fields in two columns
+with st.form("crop_form"):
+    st.subheader("📊 Input Parameters")
+    col1, col2 = st.columns(2)
+
+    with col1:
+        nitrogen = st.number_input("Nitrogen (N)", min_value=0, max_value=200, value=50)
+        phosphorus = st.number_input("Phosphorus (P)", min_value=0, max_value=200, value=50)
+        potassium = st.number_input("Potassium (K)", min_value=0, max_value=200, value=50)
+        ph = st.number_input("Soil pH", min_value=0.0, max_value=14.0, value=6.5)
+
+    with col2:
+        temperature = st.number_input("Temperature (°C)", min_value=0.0, max_value=60.0, value=25.0)
+        humidity = st.number_input("Humidity (%)", min_value=0.0, max_value=100.0, value=60.0)
+        rainfall = st.number_input("Rainfall (mm)", min_value=0.0, max_value=500.0, value=100.0)
+
+    submitted = st.form_submit_button("🌱 Predict Crop")              
+
+# Placeholder result section
+if submitted:
+    # 🚀 Replace this block with actual model prediction
+    # e.g. result = model.predict([[...]])
+    mock_result = "Wheat"  # Hardcoded for now
+    st.success(f"✅ Recommended Crop: **{mock_result}**")
+    st.balloons()
+
+ 
