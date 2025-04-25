@@ -249,6 +249,26 @@ def add_bg_from_url():
      )
 
 add_bg_from_url()
+
+import plotly.graph_objects as go
+
+def display_prediction_chart(crop, probability):
+    fig = go.Figure(go.Indicator(
+        mode = "gauge+number+delta",
+        value = probability,
+        domain = {'x': [0, 1], 'y': [0, 1]},
+        title = {'text': f"Prediction Confidence for {crop}", 'font': {'size': 18}},
+        gauge = {
+            'axis': {'range': [0, 100]},
+            'bar': {'color': "#4CAF50"},
+            'steps': [
+                {'range': [0, 50], 'color': "#ffcccc"},
+                {'range': [50, 75], 'color': "#ffe0b2"},
+                {'range': [75, 100], 'color': "#c8e6c9"}
+            ]
+        }))
+    st.plotly_chart(fig, use_container_width=True)
+
  
 
 
