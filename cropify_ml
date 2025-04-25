@@ -33,6 +33,7 @@ if submitted:
     st.success(f"✅ Recommended Crop: **{mock_result}**")
     st.balloons()
 
+
 #RANDOM FOREST(TRAINING AND SAVING)
 # train_rf_model.py
 import pandas as pd
@@ -59,6 +60,7 @@ rf_model.fit(X_train, y_train)
 # Save the trained model to a file
 joblib.dump(rf_model, "rf_crop_model.pkl")
 print("✅ Random Forest model trained and saved as 'rf_crop_model.pkl'")
+
 
 #INTEGRATION OF MODEL IN THE STREAMLIT APP (RANDOM FOREST)
 # cropii.py
@@ -91,6 +93,7 @@ if st.button("🌱 Predict Optimal Crop"):
     
     # Display the result
     st.success(f"✅ Recommended Crop: **{prediction}**")
+
 
 #MLP MODEL (TRAINING AND TESTING)
 # train_mlp_model.py
