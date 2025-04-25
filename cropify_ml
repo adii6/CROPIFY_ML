@@ -154,6 +154,44 @@ if st.button("🌱 Predict Optimal Crop"):
     # Display the result
     st.success(f"✅ Recommended Crop: **{prediction}**")
 
+#TO ADD THE DROPDOWNBOX
+#to add the slidebar on the models 
+import streamlit as st
+import joblib
+import numpy as np
+
+# Load all models
+models = {
+    "Random Forest": joblib.load("rf_crop_model.pkl"),
+    "Naive Bayes": joblib.load("nb_crop_model.pkl"),
+    "MLP": joblib.load("mlp_crop_model.pkl"),
+    "Decision Tree": joblib.load("dt_crop_model.pkl")
+}
+
+# Streamlit app title
+st.title("🌾 Cropify - Smart Crop Recommendation")
+
+# Model selection dropdown
+model_choice = st.selectbox("Choose ML Model", list(models.keys()))
+model = models[model_choice]
+
+# Input sliders
+nitrogen = st.slider("Nitrogen (N)", 0, 140, 70)
+phosphorus = st.slider("Phosphorus (P)", 5, 145, 60)
+potassium = st.slider("Potassium (K)", 5, 205, 65)
+temperature = st.slider("Temperature (°C)", 10, 45, 25)
+humidity = st.slider("Humidity (%)", 10, 100, 60)
+ph = st.slider("Soil pH", 3.5, 9.5, 6.5)
+rainfall = st.slider("Rainfall (mm)", 20.0, 300.0, 100.0)
+
+# Predict button
+if st.button("🌱 Predict Optimal Crop"):
+    input_data = np.array([[nitrogen, phosphorus, potassium, temperature, humidity, ph, rainfall]])
+    prediction = model.predict(input_data)[0]
+    st.success(f"✅ Recommended Crop using {model_choice}: **{prediction}**")
+
+
+
 
 
 
