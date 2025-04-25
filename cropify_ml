@@ -33,4 +33,67 @@ if submitted:
     st.success(f"✅ Recommended Crop: **{mock_result}**")
     st.balloons()
 
+#RANDOM FOREST(TRAINING AND SAVING)
+# train_rf_model.py
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+import joblib
+
+# Load your dataset
+data = pd.read_csv("crop_dataset.csv")  # Ensure this CSV file is in your working directory
+
+# Separate features and target
+X = data.drop("label", axis=1)  # Features
+y = data["label"]               # Target variable
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Initialize the Random Forest Classifier
+rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
+
+# Train the model
+rf_model.fit(X_train, y_train)
+
+# Save the trained model to a file
+joblib.dump(rf_model, "rf_crop_model.pkl")
+print("✅ Random Forest model trained and saved as 'rf_crop_model.pkl'")
+
+#INTEGRATION OF MODEL IN THE STREAMLIT APP (RANDOM FOREST)
+# cropii.py
+import streamlit as st
+import joblib
+import numpy as np
+
+# Load the trained Random Forest model
+model = joblib.load("rf_crop_model.pkl")
+
+# Set up the Streamlit app
+st.title("🌾 Cropify - Smart Crop Recommendation")
+
+# Create sliders for user input
+nitrogen = st.slider("Nitrogen (N)", 0, 140, 70)
+phosphorus = st.slider("Phosphorus (P)", 5, 145, 60)
+potassium = st.slider("Potassium (K)", 5, 205, 65)
+temperature = st.slider("Temperature (°C)", 10, 45, 25)
+humidity = st.slider("Humidity (%)", 10, 100, 60)
+ph = st.slider("Soil pH", 3.5, 9.5, 6.5)
+rainfall = st.slider("Rainfall (mm)", 20.0, 300.0, 100.0)
+
+# Predict the optimal crop when the button is clicked
+if st.button("🌱 Predict Optimal Crop"):
+    # Prepare the input data as a 2D array
+    input_data = np.array([[nitrogen, phosphorus, potassium, temperature, humidity, ph, rainfall]])
+    
+    # Make the prediction
+    prediction = model.predict(input_data)[0]
+    
+    # Display the result
+    st.success(f"✅ Recommended Crop: **{prediction}**")
+
+
+
+
+
  
