@@ -269,6 +269,25 @@ def display_prediction_chart(crop, probability):
         }))
     st.plotly_chart(fig, use_container_width=True)
 
+
+#USER CITY DETECTON USING IP ADDRESS
+import requests
+
+def get_city_from_ip():
+    try:
+        response = requests.get('https://ipinfo.io/json')
+        data = response.json()
+        city = data['city']
+        return city
+    except Exception as e:
+        print("Error detecting city:", e)
+        return None
+
+# Example usage
+city = get_city_from_ip()
+print(f"Detected city: {city}")
+
+
  
 
 
