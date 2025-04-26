@@ -308,6 +308,41 @@ city, region, country = get_location()
 print(f"📍 You are in {city}, {region}, {country}")
 
 
+#API KEY INSERTION 
+import requests
+
+# Replace this with your OpenWeatherMap API key
+API_KEY = "YOUR_OPENWEATHERMAP_API_KEY"
+
+def get_location():
+    response = requests.get("https://ipinfo.io/json")
+    data = response.json()
+    return data["city"]
+
+def get_weather(city):
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
+    response = requests.get(url)
+    data = response.json()
+    
+    if "main" in data:
+        temp = data["main"]["temp"]
+        humidity = data["main"]["humidity"]
+        weather = data["weather"][0]["main"]
+        return temp, humidity, weather
+    else:
+        return None, None, None
+
+# Example usage:
+city = get_location()
+temp, humidity, weather = get_weather(city)
+
+print(f"📍 City: {city}")
+print(f"🌡️ Temp: {temp} °C")
+print(f"💧 Humidity: {humidity}%")
+print(f"⛅ Weather: {weather}")
+
+
+
 
  
 
