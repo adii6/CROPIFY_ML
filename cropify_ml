@@ -372,6 +372,56 @@ translations = {
 }
 
 
+#CORRELATION UPDATED 
+# Import libraries
+import pandas as pd
+from sklearn.feature_selection import f_classif, mutual_info_classif
+import matplotlib.pyplot as plt
+
+# Step 1: Create the dataset
+data = {
+    'N': [90, 70, 80, 60],
+    'P': [40, 60, 55, 50],
+    'K': [40, 60, 65, 50],
+    'Temperature': [25, 20, 22, 18],
+    'Humidity': [80, 60, 65, 55],
+    'pH': [6.5, 6.8, 6.7, 6.4],
+    'Rainfall': [200, 150, 180, 100],
+    'Label': ['Rice', 'Wheat', 'Maize', 'Barley']
+}
+
+df = pd.DataFrame(data)
+
+# Step 2: Separate features (X) and label (y)
+X = df.drop('Label', axis=1)
+y = df['Label']
+
+# Step 3: Calculate ANOVA F-score and Mutual Info score
+f_scores, _ = f_classif(X, y)
+mutual_info_scores = mutual_info_classif(X, y, discrete_features=False)
+
+# Step 4: Put results into a DataFrame
+feature_importance = pd.DataFrame({
+    'Feature': X.columns,
+    'F-Score': f_scores,
+    'Mutual Info Score': mutual_info_scores
+})
+
+# Step 5: Sort and display
+feature_importance = feature_importance.sort_values(by='F-Score', ascending=False)
+print(feature_importance)
+
+# Step 6: Plotting
+plt.figure(figsize=(10,6))
+plt.barh(feature_importance['Feature'], feature_importance['F-Score'], color='skyblue')
+plt.xlabel('F-Score Importance')
+plt.title('Feature Importance for Crop Prediction')
+plt.gca().invert_yaxis()
+plt.grid(axis='x', linestyle='--', alpha=0.7)
+plt.show()
+
+
+
 
 
 
