@@ -423,6 +423,39 @@ plt.show()
 
 
 
+#FLOW DIAGARAM ON TAB3
+import streamlit as st
+import plotly.graph_objects as go
+
+# TAB 3 
+tab1, tab2, tab3 = st.tabs(["🌱 Crop Recommendation", "📊 Data Analysis", "🌐 Working Flow 3D"])
+
+with tab3:
+    st.subheader("🌐 3D Working Flow Diagram of Cropify")
+
+    fig = go.Figure(data=[go.Sankey(
+        node = dict(
+            pad = 15,
+            thickness = 20,
+            line = dict(color="black", width=0.5),
+            label = ["User Input (Soil, Weather)", "Weather API Fetch", "ML Model Selection", "Preprocessing", "Prediction Engine", "Crop Output"],
+            color = ["#00cc96", "#636efa", "#ef553b", "#ab63fa", "#ffa15a", "#19d3f3"]
+        ),
+        link = dict(
+            source = [0, 0, 1, 2, 3],  # where the link starts
+            target = [1, 2, 3, 4, 5],  # where the link points
+            value = [1, 1, 1, 1, 1],   # strength of the flow
+            color = ["#b6e880", "#80dfff", "#ffb3b3", "#cfa9ff", "#ffd480"]
+        )
+    )])
+
+    fig.update_layout(title_text="Cropify ML Working Flow", font_size=15)
+    st.plotly_chart(fig, use_container_width=True)
+
+
+
+
+
 
 
  
